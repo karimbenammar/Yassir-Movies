@@ -7,8 +7,8 @@ object ImageHelper {
      *
      * @param path Path to the image
      */
-    fun generateImageUrl(path: String): String {
-        return BASE_URL_W500 + path
+    fun generateImageUrl(path: String, isOriginalRes: Boolean = false): String {
+        return (if (isOriginalRes) BASE_URL_ORIGINAL else BASE_URL_W500) + path
     }
 
     private const val BASE_URL_W500 = "https://image.tmdb.org/t/p/w500"

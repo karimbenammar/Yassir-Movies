@@ -12,23 +12,28 @@ import com.yassir.movies.databinding.ItemMovieBinding
 import com.yassir.movies.util.ImageHelper
 import java.time.LocalDate
 
-class MoviesAdapter : ListAdapter<Movie, MoviesAdapter.MoviesViewHolder>(Movie.DiffUtilCallback()) {
+class MoviesAdapter(
+    private val onItemClicked: (Movie) -> Unit
+) : ListAdapter<Movie, MoviesAdapter.MoviesViewHolder>(Movie.DiffUtilCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
         val itemBinding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MoviesViewHolder(itemBinding)
+        return MoviesViewHolder(itemBinding, onItemClicked)
     }
 
     override fun onBindViewHolder(holder: MoviesViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val movie = getItem(position)
+        holder.bind(movie)
     }
 
     class MoviesViewHolder(
-        private val itemBinding: ItemMovieBinding
+        private val itemBinding: ItemMovieBinding,
+        private val onItemClicked: (Movie) -> Unit
     ) : RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(movie: Movie) {
             itemBinding.run {
                 // Set up movie item
-                movieTitle.text = movie.original_title
+                movieTitle.text = movie.title
+                // TODO: Add an alternative for older SDK versions
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     movieYear.text = LocalDate.parse(movie.release_date).year.toString()
                 }
@@ -36,6 +41,9 @@ class MoviesAdapter : ListAdapter<Movie, MoviesAdapter.MoviesViewHolder>(Movie.D
                     .load(ImageHelper.generateImageUrl(movie.poster_path))
                     .placeholder(R.drawable.item_movie_placeholder)
                     .into(moviePoster)
+                root.setOnClickListener {
+                    onItemClicked.invoke(movie)
+                }
             }
         }
     }
