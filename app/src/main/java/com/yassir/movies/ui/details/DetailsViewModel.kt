@@ -14,7 +14,6 @@ class DetailsViewModel @Inject constructor(
     private val api: Api,
 ): ViewModel() {
     fun fetchMovieDetails(movieId: Int): Observable<Movie> {
-        println("TICHA " + movieId)
         return api.fetchMovieDetails(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

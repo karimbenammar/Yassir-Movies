@@ -7,4 +7,5 @@
     <color name="grey_dark">#272727</color>
     <color name="orange">#FE8700</color>
     <color name="orange_light">#FEA409</color>
+    <color name="transparent">#00000000</color>
 </resources>

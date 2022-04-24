@@ -2,7 +2,6 @@ package com.yassir.movies.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,9 +17,13 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private val compositeDisposable = CompositeDisposable()
-    private val moviesAdapter = MoviesAdapter { movie -> movieItemClicked(movie) }
+    private val trendingMoviesAdapter = MoviesAdapter { movie -> movieItemClicked(movie) }
+    private val latestMoviesAdapter = MoviesAdapter { movie -> movieItemClicked(movie) }
+    private val upcomingMoviesAdapter = MoviesAdapter { movie -> movieItemClicked(movie) }
 
-    private lateinit var moviesList: MutableList<Movie>
+    private lateinit var trendingMoviesList: MutableList<Movie>
+    private lateinit var latestMoviesList: MutableList<Movie>
+    private lateinit var upcomingMoviesList: MutableList<Movie>
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,27 +32,42 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        moviesList = mutableListOf()
+        trendingMoviesList = mutableListOf()
+        latestMoviesList = mutableListOf()
+        upcomingMoviesList = mutableListOf()
 
-        binding.recyclerMovies.run {
+        binding.recyclerTrendingMovies.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = moviesAdapter
+            adapter = trendingMoviesAdapter
+        }
+        binding.recyclerLatestMovies.run {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = latestMoviesAdapter
+        }
+        binding.recyclerUpcomingMovies.run {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = upcomingMoviesAdapter
         }
 
         updateMoviesList()
     }
 
     private fun updateMoviesList() {
-        val disposable = viewModel.fetchMoviesDiscover().subscribe(
-            { result ->
-                moviesList.addAll(result.results)
-                moviesAdapter.submitList(moviesList)
-            },
-            { error ->
-                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
-            }
-        )
-        compositeDisposable.add(disposable)
+        val trendingMoviesDisposable = viewModel.fetchMoviesDiscover().subscribe { result ->
+            trendingMoviesList.addAll(result.results)
+            trendingMoviesAdapter.submitList(trendingMoviesList)
+        }
+        val latestMoviesDisposable = viewModel.fetchMoviesLatest().subscribe { result ->
+            latestMoviesList.addAll(result.results)
+            latestMoviesAdapter.submitList(latestMoviesList)
+        }
+        val upcomingMoviesDisposable = viewModel.fetchMoviesUpcoming().subscribe { result ->
+            upcomingMoviesList.addAll(result.results)
+            upcomingMoviesAdapter.submitList(upcomingMoviesList)
+        }
+        compositeDisposable.add(trendingMoviesDisposable)
+        compositeDisposable.add(latestMoviesDisposable)
+        compositeDisposable.add(upcomingMoviesDisposable)
     }
 
     private fun movieItemClicked(movie: Movie) {

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.yassir.movies"
-        minSdk 21
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -58,6 +58,7 @@ dependencies {
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     kapt "com.google.dagger:hilt-compiler:2.40.3"
 

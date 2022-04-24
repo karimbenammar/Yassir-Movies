@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Yassir Movies</string>
     <string name="trending_section_title">Trending</string>
+    <string name="latest_section_title">Latest Releases</string>
+    <string name="upcoming_section_title">Upcoming</string>
     <string name="more">More</string>
     <string name="less">Less</string>
     <string name="genre">Genre</string>

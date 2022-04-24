@@ -14,9 +14,11 @@
         android:theme="@style/Theme.YassirMovies">
         <activity
             android:name=".ui.details.DetailsActivity"
+            android:theme="@style/Theme.Transparent.Fullscreen"
             android:exported="false" />
         <activity
             android:name=".ui.main.MainActivity"
+            android:theme="@style/Theme.YassirMovies"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

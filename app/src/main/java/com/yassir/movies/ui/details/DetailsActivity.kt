@@ -1,6 +1,7 @@
 package com.yassir.movies.ui.details
 
 import android.animation.ObjectAnimator
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.View.INVISIBLE
@@ -11,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.WindowCompat
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.yassir.movies.R
@@ -36,7 +38,7 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
+        binding.backButton.setOnClickListener { onBackPressed() }
         initData()
     }
 
@@ -57,25 +59,28 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun initView() {
         val img = ImageView(this)
-        Picasso.get()
-            .load(ImageHelper.generateImageUrl(mMovie.backdrop_path.toString(), true))
-            .into(img, object: Callback {
-                override fun onSuccess() {
-                    binding.movieCover.background = img.drawable
-                }
-                override fun onError(e: Exception?) {
-                    println(e?.localizedMessage)
-                }
-            })
-        Picasso.get()
-            .load(ImageHelper.generateImageUrl(mMovie.poster_path.toString()))
-            .into(binding.moviePoster)
+
+        var picassoRequest = if (mMovie.poster_path.isNullOrEmpty())
+            Picasso.get().load(R.drawable.item_movie_placeholder)
+        else
+            Picasso.get().load(ImageHelper.generateImageUrl(mMovie.poster_path!!))
+        picassoRequest.into(binding.moviePoster)
+
+        picassoRequest = if (mMovie.backdrop_path.isNullOrEmpty())
+            Picasso.get().load(R.drawable.item_cover_placeholder)
+        else
+            Picasso.get().load(ImageHelper.generateImageUrl(mMovie.backdrop_path!!))
+        picassoRequest.into(img, object: Callback {
+            override fun onSuccess() {
+                binding.movieCover.background = img.drawable
+            }
+            override fun onError(e: Exception?) {
+                println(e?.localizedMessage)
+            }
+        })
 
         binding.movieTitle.text = mMovie.title
-        // TODO: Add an alternative for older SDK versions
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
-        }
+        binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
         binding.movieGenre.text = appendGenres(mMovie.genres)

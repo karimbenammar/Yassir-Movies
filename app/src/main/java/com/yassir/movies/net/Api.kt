@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import java.time.LocalDateTime
 
 /**
  * Interface to define REST API calls.
@@ -39,6 +40,25 @@ interface Api {
         @Query("language") language: String = "en-US",
         @Query("sort_by") sort_by: String = "popularity.desc",
         @Query("page") page: String = "1",
+    ): Observable<MovieCollection.Result>
+
+    @GET(GET_MOVIES_DISCOVER)
+    fun fetchMoviesLatest(
+        @Query("api_key") clientID: String = API_KEY,
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sort_by: String = "release_date.desc",
+        @Query("page") page: String = "1",
+        @Query("vote_count.gte") vote_count_gte: Int = 20,
+        @Query("release_date.lte") release_date_lte: String = "9999-99-99",
+        ): Observable<MovieCollection.Result>
+
+    @GET(GET_MOVIES_DISCOVER)
+    fun fetchMoviesUpcoming(
+        @Query("api_key") clientID: String = API_KEY,
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sort_by: String = "popularity.desc",
+        @Query("page") page: String = "1",
+        @Query("primary_release_date.gte") release_date_gte: String = "9999-99-99",
     ): Observable<MovieCollection.Result>
 
     @GET(GET_MOVIE_DETAILS)

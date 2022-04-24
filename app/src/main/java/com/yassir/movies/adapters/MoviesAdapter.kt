@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.RequestCreator
 import com.yassir.movies.R
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ItemMovieBinding
@@ -33,14 +34,14 @@ class MoviesAdapter(
             itemBinding.run {
                 // Set up movie item
                 movieTitle.text = movie.title
-                // TODO: Add an alternative for older SDK versions
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    movieYear.text = LocalDate.parse(movie.release_date).year.toString()
-                }
-                Picasso.get()
-                    .load(ImageHelper.generateImageUrl(movie.poster_path))
-                    //.placeholder(R.drawable.item_movie_placeholder)
-                    .into(moviePoster)
+                movieYear.text = LocalDate.parse(movie.release_date).year.toString()
+
+                val picassoRequest = if (movie.poster_path.isNullOrEmpty())
+                    Picasso.get().load(R.drawable.item_movie_placeholder)
+                else
+                    Picasso.get().load(ImageHelper.generateImageUrl(movie.poster_path))
+                picassoRequest.into(moviePoster)
+
                 root.setOnClickListener {
                     onItemClicked.invoke(movie)
                 }
