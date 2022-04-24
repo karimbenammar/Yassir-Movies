@@ -7,6 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -16,7 +17,7 @@ interface Api {
     companion object {
         /** The API Endpoints.  */
         private const val GET_MOVIES_DISCOVER = "3/discover/movie"
-        private const val GET_MOVIE_DETAILS = "3/movies/{movie_id}"
+        private const val GET_MOVIE_DETAILS = "3/movie/{movie_id}"
 
         /** api_key (used for testing purposes) */
         private const val API_KEY = "c9856d0cb57c3f14bf75bdc6c063b8f3"
@@ -42,6 +43,7 @@ interface Api {
 
     @GET(GET_MOVIE_DETAILS)
     fun fetchMovieDetails(
+        @Path("movie_id") movieID: Int,
         @Query("api_key") clientID: String = API_KEY,
         @Query("language") language: String = "en-US"
     ): Observable<Movie>

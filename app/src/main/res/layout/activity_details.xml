@@ -7,7 +7,7 @@
     android:background="@color/grey_dark"
     tools:context=".ui.details.DetailsActivity">
 
-    <ImageView
+    <com.elyeproj.loaderviewlibrary.LoaderImageView
         android:id="@+id/movie_cover"
         android:layout_width="0dp"
         android:layout_height="200dp"
@@ -30,11 +30,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.elyeproj.loaderviewlibrary.LoaderImageView
             android:id="@+id/movie_poster"
             android:layout_width="120dp"
             android:layout_height="180dp"
-            app:srcCompat="@drawable/item_movie_placeholder"
+            tools:srcCompat="@drawable/item_movie_placeholder"
             tools:ignore="ContentDescription" />
 
         <LinearLayout
@@ -44,7 +44,7 @@
             android:layout_marginStart="16dp"
             android:orientation="vertical">
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/movie_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:textColor="@color/white"
                 tools:text="The Batman" />
 
-            <TextView
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/movie_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <com.elyeproj.loaderviewlibrary.LoaderTextView
         android:id="@+id/movie_overview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -87,11 +87,77 @@
         android:id="@+id/expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/lato"
         android:text="@string/more"
         android:textColor="@color/orange"
+        android:textAllCaps="true"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_overview" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_overview"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/movie_overview"
+        app:layout_constraintStart_toStartOf="@+id/movie_overview"
+        app:layout_constraintTop_toBottomOf="@+id/expand">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/genre_title"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/genre"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/grey_lighter"
+                android:textAllCaps="true"
+                android:textSize="14sp"/>
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/movie_genre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                tools:text="Action, Adventure, Science Fiction"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/status_title"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="@string/status"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/grey_lighter"
+                android:textAllCaps="true"
+                android:textSize="14sp"/>
+
+            <com.elyeproj.loaderviewlibrary.LoaderTextView
+                android:id="@+id/movie_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/white"
+                android:lines="1"
+                android:textSize="14sp"
+                tools:text="Released"/>
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

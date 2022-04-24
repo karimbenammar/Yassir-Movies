@@ -23,7 +23,7 @@
             android:foreground="?android:attr/selectableItemBackground"
             app:cardCornerRadius="4dp">
 
-            <ImageView
+            <com.elyeproj.loaderviewlibrary.LoaderImageView
                 android:id="@+id/movie_poster"
                 android:layout_width="120dp"
                 android:layout_height="180dp"
@@ -32,7 +32,7 @@
                 tools:ignore="ContentDescription" />
         </androidx.cardview.widget.CardView>
 
-        <TextView
+        <com.elyeproj.loaderviewlibrary.LoaderTextView
             android:id="@+id/movie_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:textColor="@color/white"
             tools:text="The Batman" />
 
-        <TextView
+        <com.elyeproj.loaderviewlibrary.LoaderTextView
             android:id="@+id/movie_year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

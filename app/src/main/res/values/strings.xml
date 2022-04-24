@@ -3,4 +3,6 @@
     <string name="trending_section_title">Trending</string>
     <string name="more">More</string>
     <string name="less">Less</string>
+    <string name="genre">Genre</string>
+    <string name="status">Status</string>
 </resources>

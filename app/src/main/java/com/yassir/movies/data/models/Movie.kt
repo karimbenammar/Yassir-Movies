@@ -12,6 +12,9 @@ data class Movie(
     val release_date: String,
     val overview: String,
     val title: String,
+    val runtime: String,
+    val status: String,
+    val genres: List<Genre>,
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -22,6 +25,11 @@ data class Movie(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
+        parcel.readString().toString(),
+        parcel.readString().toString(),
+        arrayListOf<Genre>().apply {
+            parcel.readList(this, Genre::class.java.classLoader)
+        }
     )
 
     class DiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
@@ -36,6 +44,9 @@ data class Movie(
                    oldItem.backdrop_path == newItem.backdrop_path &&
                    oldItem.release_date == newItem.release_date &&
                    oldItem.title == newItem.title &&
+                   oldItem.runtime == newItem.runtime &&
+                   oldItem.status == newItem.status &&
+                   oldItem.genres == newItem.genres &&
                    oldItem.overview == newItem.overview
         }
     }
@@ -48,6 +59,9 @@ data class Movie(
         parcel.writeString(release_date)
         parcel.writeString(overview)
         parcel.writeString(title)
+        parcel.writeString(runtime)
+        parcel.writeString(status)
+        parcel.writeList(genres)
     }
 
     override fun describeContents(): Int {

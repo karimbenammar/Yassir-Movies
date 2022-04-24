@@ -8,21 +8,28 @@ import android.view.View.VISIBLE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.yassir.movies.R
+import com.yassir.movies.data.models.Genre
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ActivityDetailsBinding
 import com.yassir.movies.util.ImageHelper
+import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.disposables.CompositeDisposable
 import java.time.LocalDate
 
-
+@AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
+    private lateinit var mMovie: Movie
 
-    private var mMovie: Movie? = null
+    private val compositeDisposable = CompositeDisposable()
+    private val viewModel: DetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +38,27 @@ class DetailsActivity : AppCompatActivity() {
         setContentView(view)
 
         initData()
-        initView()
     }
 
     private fun initData() {
-        mMovie = intent.getParcelableExtra(MOVIE_DETAILS)
+        val movieId = intent.getParcelableExtra<Movie>(MOVIE_DETAILS)?.id
+
+        val disposable = viewModel.fetchMovieDetails(movieId!!).subscribe(
+            { result ->
+                mMovie = result
+                initView()
+            },
+            { error ->
+                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+            }
+        )
+        compositeDisposable.add(disposable)
     }
 
     private fun initView() {
         val img = ImageView(this)
         Picasso.get()
-            .load(ImageHelper.generateImageUrl(mMovie?.backdrop_path.toString(), true))
-            .placeholder(R.drawable.item_cover_placeholder)
+            .load(ImageHelper.generateImageUrl(mMovie.backdrop_path.toString(), true))
             .into(img, object: Callback {
                 override fun onSuccess() {
                     binding.movieCover.background = img.drawable
@@ -52,21 +68,32 @@ class DetailsActivity : AppCompatActivity() {
                 }
             })
         Picasso.get()
-            .load(ImageHelper.generateImageUrl(mMovie?.poster_path.toString()))
-            .placeholder(R.drawable.item_movie_placeholder)
+            .load(ImageHelper.generateImageUrl(mMovie.poster_path.toString()))
             .into(binding.moviePoster)
-        binding.movieTitle.text = mMovie?.title
+
+        binding.movieTitle.text = mMovie.title
         // TODO: Add an alternative for older SDK versions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.movieYear.text = LocalDate.parse(mMovie?.release_date).year.toString()
+            binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
         }
-        binding.movieOverview.text = mMovie?.overview
+        binding.movieOverview.text = mMovie.overview
+        binding.movieStatus.text = mMovie.status
+        binding.movieGenre.text = appendGenres(mMovie.genres)
         binding.movieOverview.post {
             binding.expand.visibility = if (binding.movieOverview.lineCount > COLLAPSED_OVERVIEW_MAX_LINES) VISIBLE else INVISIBLE
         }
         binding.expand.setOnClickListener {
             toggleTextViewExpansion(binding.movieOverview, it as Button)
         }
+
+    }
+
+    private fun appendGenres(genres: List<Genre>): String {
+        var result = ""
+        for ((i, genre) in genres.withIndex()) {
+            result += if (i == genres.size - 1) genre.name else genre.name + ", "
+        }
+        return result
     }
 
     /**

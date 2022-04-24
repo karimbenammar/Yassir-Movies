@@ -39,7 +39,7 @@ class MoviesAdapter(
                 }
                 Picasso.get()
                     .load(ImageHelper.generateImageUrl(movie.poster_path))
-                    .placeholder(R.drawable.item_movie_placeholder)
+                    //.placeholder(R.drawable.item_movie_placeholder)
                     .into(moviePoster)
                 root.setOnClickListener {
                     onItemClicked.invoke(movie)
