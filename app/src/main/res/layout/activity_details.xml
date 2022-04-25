@@ -7,7 +7,6 @@
     android:background="@color/grey_dark"
     tools:context=".ui.details.DetailsActivity">
 
-
     <com.elyeproj.loaderviewlibrary.LoaderImageView
         android:id="@+id/movie_cover"
         android:layout_width="0dp"
@@ -18,27 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@drawable/item_cover_placeholder"
         tools:ignore="ContentDescription" />
-
-    <FrameLayout
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="38dp"
-        android:background="@color/transparent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/movie_cover">
-
-        <ImageView
-            android:id="@+id/back_button"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/ripple_effect"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
-            tools:ignore="ContentDescription" />
-    </FrameLayout>
-
 
     <LinearLayout
         android:id="@+id/movie_header_section"
@@ -110,13 +88,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:background="@drawable/ripple_effect"
         android:clickable="true"
         android:focusable="true"
-        android:background="@drawable/ripple_effect"
         android:fontFamily="@font/lato"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp"
         android:text="@string/more"
-        android:textColor="@color/orange"
         android:textAllCaps="true"
+        android:textColor="@color/orange"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

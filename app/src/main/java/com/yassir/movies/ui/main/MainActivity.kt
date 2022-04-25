@@ -1,16 +1,22 @@
 package com.yassir.movies.ui.main
 
 import android.content.Intent
+import android.graphics.Color.blue
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
+import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yassir.movies.R
 import com.yassir.movies.adapters.MoviesAdapter
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ActivityMainBinding
 import com.yassir.movies.ui.details.DetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -31,6 +37,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        supportActionBar?.hide()
 
         trendingMoviesList = mutableListOf()
         latestMoviesList = mutableListOf()
@@ -68,6 +76,10 @@ class MainActivity : AppCompatActivity() {
         compositeDisposable.add(trendingMoviesDisposable)
         compositeDisposable.add(latestMoviesDisposable)
         compositeDisposable.add(upcomingMoviesDisposable)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        return super.onCreateOptionsMenu(menu)
     }
 
     private fun movieItemClicked(movie: Movie) {
