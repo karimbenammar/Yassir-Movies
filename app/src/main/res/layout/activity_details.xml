@@ -55,15 +55,44 @@
                 android:textColor="@color/white"
                 tools:text="The Batman" />
 
-            <com.elyeproj.loaderviewlibrary.LoaderTextView
-                android:id="@+id/movie_year"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_smallest"
-                android:fontFamily="@font/lato"
-                android:textColor="@color/grey_lighter"
-                android:textSize="@dimen/textSize_small"
-                tools:text="2022" />
+                android:orientation="horizontal">
+
+                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                    android:id="@+id/movie_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/grey_lighter"
+                    android:textSize="@dimen/textSize_small"
+                    tools:text="2022" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest"
+                    android:layout_marginStart="@dimen/margin_smallest"
+                    android:layout_marginEnd="@dimen/margin_smallest"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/grey_lighter"
+                    android:textSize="@dimen/textSize_small"
+                    android:text="@string/dot_divider"/>
+
+                <com.elyeproj.loaderviewlibrary.LoaderTextView
+                    android:id="@+id/movie_runtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_smallest"
+                    android:fontFamily="@font/lato"
+                    android:textColor="@color/grey_lighter"
+                    android:textSize="@dimen/textSize_small"
+                    tools:text="2h 56m" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 

@@ -12,7 +12,7 @@ data class Movie(
     val release_date: String,
     val overview: String,
     val title: String,
-    val runtime: String,
+    val runtime: Int,
     val status: String,
     val genres: List<Genre>,
 ) : Parcelable {
@@ -25,7 +25,7 @@ data class Movie(
         parcel.readString().toString(),
         parcel.readString().toString(),
         parcel.readString().toString(),
-        parcel.readString().toString(),
+        parcel.readInt(),
         parcel.readString().toString(),
         arrayListOf<Genre>().apply {
             parcel.readList(this, Genre::class.java.classLoader)
@@ -59,7 +59,7 @@ data class Movie(
         parcel.writeString(release_date)
         parcel.writeString(overview)
         parcel.writeString(title)
-        parcel.writeString(runtime)
+        parcel.writeInt(runtime)
         parcel.writeString(status)
         parcel.writeList(genres)
     }

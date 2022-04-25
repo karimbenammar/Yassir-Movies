@@ -1,8 +1,6 @@
 package com.yassir.movies.ui.details
 
 import android.animation.ObjectAnimator
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
@@ -12,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.WindowCompat
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.yassir.movies.R
@@ -83,6 +80,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.movieTitle.text = mMovie.title
         binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
         binding.movieReleaseDate.text = LocalDate.parse(mMovie.release_date).format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+        binding.movieRuntime.text = getString(R.string.runtime_placeholder, mMovie.runtime/60, mMovie.runtime%60)
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
         binding.movieGenre.text = appendGenres(mMovie.genres)

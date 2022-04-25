@@ -1,15 +1,11 @@
 package com.yassir.movies.ui.main
 
 import android.content.Intent
-import android.graphics.Color.blue
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
 import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.yassir.movies.R
 import com.yassir.movies.adapters.MoviesAdapter
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ActivityMainBinding
