@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun movieItemClicked(movie: Movie) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(DetailsActivity.MOVIE_DETAILS , movie)
+        intent.putExtra(DetailsActivity.MOVIE_DETAILS, movie)
         startActivity(intent)
     }
 }

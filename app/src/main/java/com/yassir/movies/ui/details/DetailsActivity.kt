@@ -3,8 +3,7 @@ package com.yassir.movies.ui.details
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
-import android.view.View.INVISIBLE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -80,10 +79,11 @@ class DetailsActivity : AppCompatActivity() {
             Picasso.get().load(R.drawable.item_cover_placeholder)
         else
             Picasso.get().load(ImageHelper.generateImageUrl(mMovie.backdrop_path!!))
-        picassoRequest.into(img, object: Callback {
+        picassoRequest.into(img, object : Callback {
             override fun onSuccess() {
                 binding.movieCover.background = img.drawable
             }
+
             override fun onError(e: Exception?) {
                 println(e?.localizedMessage)
             }
@@ -91,13 +91,16 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.movieTitle.text = mMovie.title
         binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
-        binding.movieReleaseDate.text = LocalDate.parse(mMovie.release_date).format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
-        binding.movieRuntime.text = getString(R.string.runtime_placeholder, mMovie.runtime/60, mMovie.runtime%60)
+        binding.movieReleaseDate.text =
+            LocalDate.parse(mMovie.release_date).format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+        binding.movieRuntime.text =
+            getString(R.string.runtime_placeholder, mMovie.runtime / 60, mMovie.runtime % 60)
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
         binding.movieGenre.text = MovieHelper.appendGenresText(mMovie.genres)
         binding.movieOverview.post {
-            binding.expand.visibility = if (binding.movieOverview.lineCount > COLLAPSED_OVERVIEW_MAX_LINES) VISIBLE else INVISIBLE
+            binding.expand.visibility =
+                if (binding.movieOverview.lineCount > COLLAPSED_OVERVIEW_MAX_LINES) VISIBLE else GONE
         }
         binding.expand.setOnClickListener {
             toggleTextViewExpansion(binding.movieOverview, it as Button)
@@ -107,13 +110,15 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun updateMoviesList() {
-        val relatedMoviesDisposable = viewModel.fetchRelatedMovies(mMovie.genres).subscribe({ result ->
-            relatedMoviesList.addAll(result.results)
-            relatedMoviesAdapter.submitList(relatedMoviesList)
-        },
-            { error ->
-                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
-            })
+        val relatedMoviesDisposable =
+            viewModel.fetchRelatedMovies(mMovie.genres).subscribe({ result ->
+                val list = result.results.filter { movie -> movie.id != mMovie.id }
+                relatedMoviesList.addAll(list)
+                relatedMoviesAdapter.submitList(relatedMoviesList)
+            },
+                { error ->
+                    Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                })
         compositeDisposable.add(relatedMoviesDisposable)
     }
 
@@ -129,7 +134,8 @@ class DetailsActivity : AppCompatActivity() {
             if (textView.maxLines == COLLAPSED_OVERVIEW_MAX_LINES) textView.lineCount else COLLAPSED_OVERVIEW_MAX_LINES
         )
         animation.setDuration(50).start()
-        toggle.text = getString(if (textView.maxLines == COLLAPSED_OVERVIEW_MAX_LINES) R.string.less else R.string.more)
+        toggle.text =
+            getString(if (textView.maxLines == COLLAPSED_OVERVIEW_MAX_LINES) R.string.less else R.string.more)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -139,11 +145,11 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun movieItemClicked(movie: Movie) {
         val intent = Intent(this, DetailsActivity::class.java)
-        intent.putExtra(MOVIE_DETAILS , movie)
+        intent.putExtra(MOVIE_DETAILS, movie)
         startActivity(intent)
     }
 
-    companion object{
+    companion object {
         const val MOVIE_DETAILS = "movie_details"
         const val COLLAPSED_OVERVIEW_MAX_LINES = 3
     }

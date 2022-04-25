@@ -118,6 +118,7 @@
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginEnd="@dimen/margin_large"
                 android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_medium"
                 android:fontFamily="@font/lato"
                 android:lineSpacingExtra="3sp"
                 android:maxLines="3"
@@ -129,15 +130,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/margin_smallest"
-                android:background="@drawable/ripple_effect"
-                android:clickable="true"
-                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
                 android:fontFamily="@font/lato"
                 android:text="@string/more"
                 android:textAllCaps="true"
                 android:textColor="@color/orange"
-                android:visibility="invisible"
+                android:visibility="gone"
                 tools:visibility="visible" />
 
             <LinearLayout
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_large"
                 android:layout_marginEnd="@dimen/margin_large"
-                android:layout_marginTop="@dimen/margin_smaller"
+                android:layout_marginTop="@dimen/margin_medium"
                 android:orientation="vertical">
 
                 <LinearLayout
