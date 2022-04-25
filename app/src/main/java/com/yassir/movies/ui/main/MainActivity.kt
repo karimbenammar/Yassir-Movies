@@ -79,4 +79,9 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(DetailsActivity.MOVIE_DETAILS, movie)
         startActivity(intent)
     }
+
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.dispose()
+    }
 }

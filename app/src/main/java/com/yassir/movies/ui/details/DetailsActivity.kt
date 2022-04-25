@@ -12,13 +12,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import com.yassir.movies.R
 import com.yassir.movies.adapters.MoviesAdapter
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ActivityDetailsBinding
-import com.yassir.movies.util.ImageHelper
 import com.yassir.movies.util.MovieHelper
+import com.yassir.movies.util.PicassoHelper
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
 import java.time.LocalDate
@@ -68,31 +67,31 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun initView() {
         val img = ImageView(this)
+        PicassoHelper.loadImage(
+            url = mMovie.poster_path,
+            imageView = binding.moviePoster,
+            placeholderId = R.drawable.item_movie_placeholder
+        )
+        PicassoHelper.loadImage(
+            url = mMovie.backdrop_path,
+            imageView = img,
+            placeholderId = R.drawable.item_cover_placeholder,
+            callback = object :
+                Callback {
+                override fun onSuccess() {
+                    binding.movieCover.background = img.drawable
+                }
 
-        var picassoRequest = if (mMovie.poster_path.isNullOrEmpty())
-            Picasso.get().load(R.drawable.item_movie_placeholder)
-        else
-            Picasso.get().load(ImageHelper.generateImageUrl(mMovie.poster_path!!))
-        picassoRequest.into(binding.moviePoster)
-
-        picassoRequest = if (mMovie.backdrop_path.isNullOrEmpty())
-            Picasso.get().load(R.drawable.item_cover_placeholder)
-        else
-            Picasso.get().load(ImageHelper.generateImageUrl(mMovie.backdrop_path!!))
-        picassoRequest.into(img, object : Callback {
-            override fun onSuccess() {
-                binding.movieCover.background = img.drawable
-            }
-
-            override fun onError(e: Exception?) {
-                println(e?.localizedMessage)
-            }
-        })
+                override fun onError(e: Exception?) {
+                    println(e?.localizedMessage)
+                }
+            })
 
         binding.movieTitle.text = mMovie.title
         binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
         binding.movieReleaseDate.text =
-            LocalDate.parse(mMovie.release_date).format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
+            LocalDate.parse(mMovie.release_date)
+                .format(DateTimeFormatter.ofPattern(RELEASE_DATE_FORMAT))
         binding.movieRuntime.text =
             getString(R.string.runtime_placeholder, mMovie.runtime / 60, mMovie.runtime % 60)
         binding.movieOverview.text = mMovie.overview
@@ -106,10 +105,10 @@ class DetailsActivity : AppCompatActivity() {
             toggleTextViewExpansion(binding.movieOverview, it as Button)
         }
 
-        updateMoviesList()
+        updateRelatedMoviesList()
     }
 
-    private fun updateMoviesList() {
+    private fun updateRelatedMoviesList() {
         val relatedMoviesDisposable =
             viewModel.fetchRelatedMovies(mMovie.genres).subscribe({ result ->
                 val list = result.results.filter { movie -> movie.id != mMovie.id }
@@ -130,7 +129,7 @@ class DetailsActivity : AppCompatActivity() {
      */
     private fun toggleTextViewExpansion(textView: TextView, toggle: Button) {
         val animation = ObjectAnimator.ofInt(
-            textView, "maxLines",
+            textView, MAX_LINES_PROPERTY_NAME,
             if (textView.maxLines == COLLAPSED_OVERVIEW_MAX_LINES) textView.lineCount else COLLAPSED_OVERVIEW_MAX_LINES
         )
         animation.setDuration(50).start()
@@ -149,8 +148,15 @@ class DetailsActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    override fun onPause() {
+        super.onPause()
+        compositeDisposable.dispose()
+    }
+
     companion object {
         const val MOVIE_DETAILS = "movie_details"
+        const val MAX_LINES_PROPERTY_NAME = "maxLines"
+        const val RELEASE_DATE_FORMAT = "dd MMMM yyyy"
         const val COLLAPSED_OVERVIEW_MAX_LINES = 3
     }
 }
