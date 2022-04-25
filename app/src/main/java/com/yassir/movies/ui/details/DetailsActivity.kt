@@ -1,6 +1,7 @@
 package com.yassir.movies.ui.details
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
@@ -10,13 +11,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.yassir.movies.R
-import com.yassir.movies.data.models.Genre
+import com.yassir.movies.adapters.MoviesAdapter
 import com.yassir.movies.data.models.Movie
 import com.yassir.movies.databinding.ActivityDetailsBinding
 import com.yassir.movies.util.ImageHelper
+import com.yassir.movies.util.MovieHelper
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
 import java.time.LocalDate
@@ -27,9 +30,11 @@ class DetailsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsBinding
     private lateinit var mMovie: Movie
+    private lateinit var relatedMoviesList: MutableList<Movie>
 
     private val compositeDisposable = CompositeDisposable()
     private val viewModel: DetailsViewModel by viewModels()
+    private val relatedMoviesAdapter = MoviesAdapter { movie -> movieItemClicked(movie) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,13 @@ class DetailsActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        relatedMoviesList = mutableListOf()
+        binding.recyclerRelatedMovies.run {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = relatedMoviesAdapter
+        }
+
         initData()
     }
 
@@ -83,7 +95,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.movieRuntime.text = getString(R.string.runtime_placeholder, mMovie.runtime/60, mMovie.runtime%60)
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
-        binding.movieGenre.text = appendGenres(mMovie.genres)
+        binding.movieGenre.text = MovieHelper.appendGenresText(mMovie.genres)
         binding.movieOverview.post {
             binding.expand.visibility = if (binding.movieOverview.lineCount > COLLAPSED_OVERVIEW_MAX_LINES) VISIBLE else INVISIBLE
         }
@@ -91,14 +103,18 @@ class DetailsActivity : AppCompatActivity() {
             toggleTextViewExpansion(binding.movieOverview, it as Button)
         }
 
+        updateMoviesList()
     }
 
-    private fun appendGenres(genres: List<Genre>): String {
-        var result = ""
-        for ((i, genre) in genres.withIndex()) {
-            result += if (i == genres.size - 1) genre.name else genre.name + ", "
-        }
-        return result
+    private fun updateMoviesList() {
+        val relatedMoviesDisposable = viewModel.fetchRelatedMovies(mMovie.genres).subscribe({ result ->
+            relatedMoviesList.addAll(result.results)
+            relatedMoviesAdapter.submitList(relatedMoviesList)
+        },
+            { error ->
+                Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+            })
+        compositeDisposable.add(relatedMoviesDisposable)
     }
 
     /**
@@ -119,6 +135,12 @@ class DetailsActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    private fun movieItemClicked(movie: Movie) {
+        val intent = Intent(this, DetailsActivity::class.java)
+        intent.putExtra(MOVIE_DETAILS , movie)
+        startActivity(intent)
     }
 
     companion object{

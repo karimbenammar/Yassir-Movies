@@ -55,7 +55,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/padding_smaller" />
+                android:paddingHorizontal="@dimen/padding_smaller"
+                tools:itemCount="8"
+                tools:orientation="horizontal"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movie" />
 
             <TextView
                 android:id="@+id/latest_title"
@@ -75,7 +79,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/padding_smaller" />
+                android:paddingHorizontal="@dimen/padding_smaller"
+                tools:itemCount="8"
+                tools:orientation="horizontal"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movie" />
 
             <TextView
                 android:id="@+id/upcoming_title"
@@ -95,7 +103,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="@dimen/padding_smaller" />
+                android:paddingHorizontal="@dimen/padding_smaller"
+                tools:itemCount="8"
+                tools:orientation="horizontal"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_movie" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

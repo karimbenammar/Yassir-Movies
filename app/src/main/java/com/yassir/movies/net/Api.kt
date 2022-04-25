@@ -36,7 +36,7 @@ interface Api {
 
     @GET(GET_MOVIES_DISCOVER)
     fun fetchMoviesDiscover(
-        @Query("api_key") clientID: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
         @Query("sort_by") sort_by: String = "popularity.desc",
         @Query("page") page: String = "1",
@@ -44,7 +44,7 @@ interface Api {
 
     @GET(GET_MOVIES_DISCOVER)
     fun fetchMoviesLatest(
-        @Query("api_key") clientID: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
         @Query("sort_by") sort_by: String = "release_date.desc",
         @Query("page") page: String = "1",
@@ -54,17 +54,26 @@ interface Api {
 
     @GET(GET_MOVIES_DISCOVER)
     fun fetchMoviesUpcoming(
-        @Query("api_key") clientID: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US",
         @Query("sort_by") sort_by: String = "popularity.desc",
         @Query("page") page: String = "1",
         @Query("primary_release_date.gte") release_date_gte: String = "9999-99-99",
     ): Observable<MovieCollection.Result>
 
+    @GET(GET_MOVIES_DISCOVER)
+    fun fetchMoviesRelated(
+        @Query("api_key") apiKey: String = API_KEY,
+        @Query("language") language: String = "en-US",
+        @Query("sort_by") sort_by: String = "popularity.desc",
+        @Query("page") page: String = "1",
+        @Query("with_genres") with_genres: String = "",
+    ): Observable<MovieCollection.Result>
+
     @GET(GET_MOVIE_DETAILS)
     fun fetchMovieDetails(
         @Path("movie_id") movieID: Int,
-        @Query("api_key") clientID: String = API_KEY,
+        @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "en-US"
     ): Observable<Movie>
 }

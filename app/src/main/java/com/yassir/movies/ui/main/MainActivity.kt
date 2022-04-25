@@ -74,10 +74,6 @@ class MainActivity : AppCompatActivity() {
         compositeDisposable.add(upcomingMoviesDisposable)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        return super.onCreateOptionsMenu(menu)
-    }
-
     private fun movieItemClicked(movie: Movie) {
         val intent = Intent(this, DetailsActivity::class.java)
         intent.putExtra(DetailsActivity.MOVIE_DETAILS , movie)
