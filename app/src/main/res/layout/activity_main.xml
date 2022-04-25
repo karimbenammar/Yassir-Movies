@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:background="@color/grey_light"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
+        android:theme="?attr/actionBarTheme"
+        app:contentInsetStart="0dp">
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="150dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/size_medium"
             android:layout_gravity="start"
             app:srcCompat="@drawable/logo_yassir_condensed_white"
             tools:ignore="ContentDescription" />
@@ -34,68 +34,68 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_large"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/discover_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_smaller"
                 android:fontFamily="@font/lato"
                 android:text="@string/trending_section_title"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textSize_large" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_trending_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="@dimen/padding_smaller" />
 
             <TextView
                 android:id="@+id/latest_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                android:layout_marginEnd="@dimen/margin_smaller"
                 android:fontFamily="@font/lato"
                 android:text="@string/latest_section_title"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textSize_large" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_latest_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="@dimen/padding_smaller" />
 
             <TextView
                 android:id="@+id/upcoming_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_xlarge"
+                android:layout_marginEnd="@dimen/margin_smaller"
                 android:fontFamily="@font/lato"
                 android:text="@string/upcoming_section_title"
                 android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:textSize="@dimen/textSize_large" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_upcoming_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
-                android:paddingHorizontal="8dp" />
+                android:paddingHorizontal="@dimen/padding_smaller" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text sizes -->
+    <dimen name="textSize_smaller">12sp</dimen>
+    <dimen name="textSize_small">14sp</dimen>
+    <dimen name="textSize_medium">16sp</dimen>
+    <dimen name="textSize_large">20sp</dimen>
+
+    <!-- Margins -->
+    <dimen name="margin_smallest">4dp</dimen>
+    <dimen name="margin_smaller">8dp</dimen>
+    <dimen name="margin_small">12dp</dimen>
+    <dimen name="margin_medium">14dp</dimen>
+    <dimen name="margin_large">16dp</dimen>
+    <dimen name="margin_xlarge">32dp</dimen>
+    <dimen name="margin_xxlarge">64dp</dimen>
+    <dimen name="margin_xxxlarge">128dp</dimen>
+
+    <!-- Paddings -->
+    <dimen name="padding_smaller">8dp</dimen>
+    <dimen name="padding_small">12dp</dimen>
+    <dimen name="padding_medium">14dp</dimen>
+    <dimen name="padding_large">16dp</dimen>
+    <dimen name="padding_xlarge">32dp</dimen>
+
+    <!-- Custom heights/widths -->
+    <dimen name="size_medium">24dp</dimen>
+    <dimen name="size_xxlarge">80dp</dimen>
+    <!-- Poster dimensions need to respect ratios -->
+    <dimen name="size_poster_m_height">210dp</dimen>
+    <dimen name="size_poster_m_width">140dp</dimen>
+    <dimen name="size_poster_s_height">180dp</dimen>
+    <dimen name="size_poster_s_width">120dp</dimen>
+    <dimen name="size_cover">200dp</dimen>
+
+</resources>

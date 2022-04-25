@@ -10,7 +10,7 @@
     <com.elyeproj.loaderviewlibrary.LoaderImageView
         android:id="@+id/movie_cover"
         android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_height="@dimen/size_cover"
         android:src="@drawable/gradient_shape"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +22,9 @@
         android:id="@+id/movie_header_section"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_xxxlarge"
+        android:layout_marginEnd="@dimen/margin_large"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,8 +32,8 @@
 
         <com.elyeproj.loaderviewlibrary.LoaderImageView
             android:id="@+id/movie_poster"
-            android:layout_width="140dp"
-            android:layout_height="210dp"
+            android:layout_width="@dimen/size_poster_m_width"
+            android:layout_height="@dimen/size_poster_m_height"
             tools:srcCompat="@drawable/item_movie_placeholder"
             tools:ignore="ContentDescription" />
 
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/margin_large"
             android:orientation="vertical">
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
@@ -51,7 +51,7 @@
                 android:fontFamily="@font/lato"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textSize="16sp"
+                android:textSize="@dimen/textSize_medium"
                 android:textColor="@color/white"
                 tools:text="The Batman" />
 
@@ -59,10 +59,10 @@
                 android:id="@+id/movie_year"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_smallest"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/grey_lighter"
-                android:textSize="14sp"
+                android:textSize="@dimen/textSize_small"
                 tools:text="2022" />
         </LinearLayout>
     </LinearLayout>
@@ -71,9 +71,9 @@
         android:id="@+id/movie_overview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
         android:fontFamily="@font/lato"
         android:lineSpacingExtra="3sp"
         android:maxLines="3"
@@ -87,15 +87,11 @@
         android:id="@+id/expand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/margin_smallest"
         android:background="@drawable/ripple_effect"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/lato"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp"
-        android:paddingBottom="0dp"
         android:text="@string/more"
         android:textAllCaps="true"
         android:textColor="@color/orange"
@@ -108,7 +104,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/margin_smaller"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="@+id/movie_overview"
         app:layout_constraintStart_toStartOf="@+id/movie_overview"
@@ -121,13 +117,13 @@
 
             <TextView
                 android:id="@+id/genre_title"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/size_xxlarge"
                 android:layout_height="wrap_content"
                 android:text="@string/genre"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/grey_lighter"
                 android:textAllCaps="true"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/textSize_small"/>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/movie_genre"
@@ -135,25 +131,25 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/white"
-                android:textSize="14sp"
+                android:textSize="@dimen/textSize_small"
                 tools:text="Action, Adventure, Science Fiction"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/margin_smaller"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/status_title"
-                android:layout_width="80dp"
+                android:layout_width="@dimen/size_xxlarge"
                 android:layout_height="wrap_content"
                 android:text="@string/status"
                 android:fontFamily="@font/lato"
                 android:textColor="@color/grey_lighter"
                 android:textAllCaps="true"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/textSize_small"/>
 
             <com.elyeproj.loaderviewlibrary.LoaderTextView
                 android:id="@+id/movie_status"
@@ -162,7 +158,7 @@
                 android:fontFamily="@font/lato"
                 android:textColor="@color/white"
                 android:lines="1"
-                android:textSize="14sp"
+                android:textSize="@dimen/textSize_small"
                 tools:text="Released"/>
         </LinearLayout>
     </LinearLayout>
