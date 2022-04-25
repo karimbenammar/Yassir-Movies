@@ -47,8 +47,10 @@ dependencies {
     // Hilt dependency injection
     implementation "com.google.dagger:hilt-android:2.40.3"
 
-    // Loader View
+    // Loader views and Shimmering
     implementation 'io.github.elye:loaderviewlibrary:3.0.0'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    implementation 'com.github.omtodkar:ShimmerRecyclerView:v0.4.1'
 
     // Retrofit & RxJava
     implementation "com.squareup.retrofit2:retrofit:2.9.0"

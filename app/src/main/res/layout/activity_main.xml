@@ -49,13 +49,16 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize_large" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/recycler_trending_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:paddingHorizontal="@dimen/padding_smaller"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:shimmer_recycler_layout="@layout/item_movie"
                 tools:itemCount="8"
                 tools:orientation="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -73,13 +76,16 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize_large" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/recycler_latest_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:paddingHorizontal="@dimen/padding_smaller"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:shimmer_recycler_layout="@layout/item_movie"
                 tools:itemCount="8"
                 tools:orientation="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -97,13 +103,16 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize_large" />
 
-            <androidx.recyclerview.widget.RecyclerView
+            <com.todkars.shimmer.ShimmerRecyclerView
                 android:id="@+id/recycler_upcoming_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small"
                 android:clipToPadding="false"
                 android:paddingHorizontal="@dimen/padding_smaller"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:shimmer_recycler_layout="@layout/item_movie"
                 tools:itemCount="8"
                 tools:orientation="horizontal"
                 tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

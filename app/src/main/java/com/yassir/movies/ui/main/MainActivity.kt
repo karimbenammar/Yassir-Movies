@@ -2,7 +2,7 @@ package com.yassir.movies.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,7 +12,6 @@ import com.yassir.movies.databinding.ActivityMainBinding
 import com.yassir.movies.ui.details.DetailsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -43,32 +42,44 @@ class MainActivity : AppCompatActivity() {
         binding.recyclerTrendingMovies.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = trendingMoviesAdapter
+            showShimmer()
         }
         binding.recyclerLatestMovies.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = latestMoviesAdapter
+            showShimmer()
         }
         binding.recyclerUpcomingMovies.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = upcomingMoviesAdapter
+            showShimmer()
         }
 
         updateMoviesList()
     }
 
     private fun updateMoviesList() {
-        val trendingMoviesDisposable = viewModel.fetchMoviesDiscover().subscribe { result ->
+        val trendingMoviesDisposable = viewModel.fetchMoviesDiscover().subscribe ({ result ->
             trendingMoviesList.addAll(result.results)
             trendingMoviesAdapter.submitList(trendingMoviesList)
-        }
-        val latestMoviesDisposable = viewModel.fetchMoviesLatest().subscribe { result ->
+            binding.recyclerTrendingMovies.hideShimmer()
+        }, { error ->
+            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+        })
+        val latestMoviesDisposable = viewModel.fetchMoviesLatest().subscribe ({ result ->
             latestMoviesList.addAll(result.results)
             latestMoviesAdapter.submitList(latestMoviesList)
-        }
-        val upcomingMoviesDisposable = viewModel.fetchMoviesUpcoming().subscribe { result ->
+            binding.recyclerLatestMovies.hideShimmer()
+        }, { error ->
+            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+        })
+        val upcomingMoviesDisposable = viewModel.fetchMoviesUpcoming().subscribe({ result ->
             upcomingMoviesList.addAll(result.results)
             upcomingMoviesAdapter.submitList(upcomingMoviesList)
-        }
+            binding.recyclerUpcomingMovies.hideShimmer()
+        }, { error ->
+            Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+        })
         compositeDisposable.add(trendingMoviesDisposable)
         compositeDisposable.add(latestMoviesDisposable)
         compositeDisposable.add(upcomingMoviesDisposable)
