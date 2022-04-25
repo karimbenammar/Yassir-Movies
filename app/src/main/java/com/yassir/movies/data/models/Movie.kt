@@ -15,6 +15,7 @@ data class Movie(
     val runtime: Int,
     val status: String,
     val genres: List<Genre>,
+    val production_countries: List<Country>,
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
@@ -29,6 +30,9 @@ data class Movie(
         parcel.readString().toString(),
         arrayListOf<Genre>().apply {
             parcel.readList(this, Genre::class.java.classLoader)
+        },
+        arrayListOf<Country>().apply {
+            parcel.readList(this, Country::class.java.classLoader)
         }
     )
 
@@ -47,6 +51,7 @@ data class Movie(
                    oldItem.runtime == newItem.runtime &&
                    oldItem.status == newItem.status &&
                    oldItem.genres == newItem.genres &&
+                   oldItem.production_countries == newItem.production_countries &&
                    oldItem.overview == newItem.overview
         }
     }
@@ -62,6 +67,7 @@ data class Movie(
         parcel.writeInt(runtime)
         parcel.writeString(status)
         parcel.writeList(genres)
+        parcel.writeList(production_countries)
     }
 
     override fun describeContents(): Int {

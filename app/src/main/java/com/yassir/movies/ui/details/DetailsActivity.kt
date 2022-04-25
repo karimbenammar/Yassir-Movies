@@ -56,7 +56,7 @@ class DetailsActivity : AppCompatActivity() {
         val disposable = viewModel.fetchMovieDetails(movieId!!).subscribe(
             { result ->
                 mMovie = result
-                initView()
+                initViews()
             },
             { error ->
                 Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -65,7 +65,7 @@ class DetailsActivity : AppCompatActivity() {
         compositeDisposable.add(disposable)
     }
 
-    private fun initView() {
+    private fun initViews() {
         val img = ImageView(this)
         PicassoHelper.loadImage(
             url = mMovie.poster_path,
@@ -97,6 +97,7 @@ class DetailsActivity : AppCompatActivity() {
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
         binding.movieGenre.text = MovieHelper.appendGenresText(mMovie.genres)
+        binding.movieCountry.text = MovieHelper.appendCountriesText(mMovie.production_countries)
         binding.movieOverview.post {
             binding.expand.visibility =
                 if (binding.movieOverview.lineCount > COLLAPSED_OVERVIEW_MAX_LINES) VISIBLE else GONE
