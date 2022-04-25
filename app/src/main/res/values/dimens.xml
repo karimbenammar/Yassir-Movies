@@ -25,7 +25,7 @@
 
     <!-- Custom heights/widths -->
     <dimen name="size_medium">24dp</dimen>
-    <dimen name="size_xxlarge">80dp</dimen>
+    <dimen name="size_xxlarge">120dp</dimen>
     <!-- Poster dimensions need to respect ratios -->
     <dimen name="size_poster_m_height">210dp</dimen>
     <dimen name="size_poster_m_width">140dp</dimen>

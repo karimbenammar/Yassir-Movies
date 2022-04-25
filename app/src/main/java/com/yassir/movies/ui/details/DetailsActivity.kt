@@ -23,6 +23,7 @@ import com.yassir.movies.util.ImageHelper
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class DetailsActivity : AppCompatActivity() {
@@ -81,6 +82,7 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.movieTitle.text = mMovie.title
         binding.movieYear.text = LocalDate.parse(mMovie.release_date).year.toString()
+        binding.movieReleaseDate.text = LocalDate.parse(mMovie.release_date).format(DateTimeFormatter.ofPattern("dd MMMM yyyy"))
         binding.movieOverview.text = mMovie.overview
         binding.movieStatus.text = mMovie.status
         binding.movieGenre.text = appendGenres(mMovie.genres)
